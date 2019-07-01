@@ -51,17 +51,17 @@ public class V1ApiController implements V1Api {
             try {
                 return new ResponseEntity<WeatherAtPoints>(objectMapper.readValue("{" +
   "\"locations\" : [ {" +
-  "\"temp\" : 10," +
+  "\"temp\" : 29.5," +
   "\"latitude\" : 0.8008281904610115," +
   "\"name\" : \"name\"," +
   "\"longitude\" : 6.027456183070403" +
   "}, {" +
-    "\"temp\" : 10," +
+    "\"temp\" : 32.10," +
     "\"latitude\" : 0.8008281904610115," +
     "\"name\" : \"name\"," +
     "\"longitude\" : 6.027456183070403" +
   "} ]," +
-  "\"version\" : \"version\"" +
+  "\"version\" : \"v1\"" +
 "}", WeatherAtPoints.class), HttpStatus.NOT_IMPLEMENTED);
             } catch (IOException e) {
                 log.error("Couldn't serialize response for content type application/json", e);
