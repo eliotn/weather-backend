@@ -16,3 +16,8 @@ You can view the api documentation in swagger-ui by pointing to
 http://localhost:8080/  
 
 Change default port value in application.properties
+
+This uses consul for autoconfiguration
+
+#sources
+https://cloud.spring.io/spring-cloud-config/multi/multi__spring_cloud_config_client.html

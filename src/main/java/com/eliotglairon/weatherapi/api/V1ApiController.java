@@ -73,7 +73,7 @@ public class V1ApiController implements V1Api {
         return new ResponseEntity<WeatherAtPoints>(HttpStatus.NOT_IMPLEMENTED);
     }
     
-    @Value("${com.eliotglairon.weatherapi.MAPBOX_SECRET}")
+    @Value("${MAPBOX_SECRET}")
     String mapboxSecret;
     
     @ApiOperation(value = "Get api secret for mapbox", nickname = "getApiKey", notes = "Get key for mapbox", response = String.class, tags={ "Weather", })
