@@ -29,6 +29,8 @@ public class V1ApiControllerIntegrationTest {
         assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
     }
     
+    
+    
     @Test
     public void getSecretTest() throws Exception {
         ResponseEntity<String> responseEntity = api.getApiSecret();

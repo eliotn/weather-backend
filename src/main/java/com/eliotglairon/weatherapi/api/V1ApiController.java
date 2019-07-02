@@ -1,6 +1,7 @@
 package com.eliotglairon.weatherapi.api;
 
 import com.eliotglairon.weatherapi.model.WeatherAtPoints;
+import com.eliotglairon.weatherapi.service.ApiService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
@@ -33,12 +34,22 @@ public class V1ApiController implements V1Api {
     private final ObjectMapper objectMapper;
 
     private final HttpServletRequest request;
+    
+    private final ApiService apiRequest;
 
     @org.springframework.beans.factory.annotation.Autowired
-    public V1ApiController(ObjectMapper objectMapper, HttpServletRequest request) {
+    public V1ApiController(ObjectMapper objectMapper, HttpServletRequest request,
+    		ApiService apiRequest) {
         this.objectMapper = objectMapper;
         this.request = request;
+        this.apiRequest = apiRequest;
     }
+    
+    @Value("${RANDOMORG_SECRET}")
+    String randomOrgSecret;
+    
+    @Value("${MAPBOX_SECRET}")
+    String mapboxSecret;
 
     @ApiOperation(value = "Get weather data at random locations", nickname = "getRandomPoints", notes = "Get weather and location information for pointCount randomized points ", response = WeatherAtPoints.class, tags={ "Weather", })
     @ApiResponses(value = { 
@@ -50,12 +61,13 @@ public class V1ApiController implements V1Api {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
+            	List<Integer> bits = apiRequest.retrieveRandomOrgBits(randomOrgSecret, 10);
                 return new ResponseEntity<WeatherAtPoints>(objectMapper.readValue("{" +
   "\"locations\" : [ {" +
-  "\"temp\" : 29.5," +
-  "\"latitude\" : 0.8008281904610115," +
+  "\"temp\" : " + bits.get(0) + "," +
+  "\"latitude\" : " + bits.get(1) + "," +
   "\"name\" : \"name\"," +
-  "\"longitude\" : 6.027456183070403" +
+  "\"longitude\" : " + bits.get(2) +
   "}, {" +
     "\"temp\" : 32.10," +
     "\"latitude\" : 0.8008281904610115," +
@@ -68,13 +80,14 @@ public class V1ApiController implements V1Api {
                 log.error("Couldn't serialize response for content type application/json", e);
                 return new ResponseEntity<WeatherAtPoints>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
+            catch (ApiException e) {
+            	log.error("random.org returned error, couldn't service request");
+            	return new ResponseEntity<WeatherAtPoints>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
         }
 
         return new ResponseEntity<WeatherAtPoints>(HttpStatus.NOT_IMPLEMENTED);
     }
-    
-    @Value("${MAPBOX_SECRET}")
-    String mapboxSecret;
     
     @ApiOperation(value = "Get api secret for mapbox", nickname = "getApiKey", notes = "Get key for mapbox", response = String.class, tags={ "Weather", })
     @ApiResponses(value = { 
