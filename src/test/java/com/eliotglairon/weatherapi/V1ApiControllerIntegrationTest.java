@@ -14,7 +14,7 @@ import com.eliotglairon.weatherapi.api.V1Api;
 import com.eliotglairon.weatherapi.model.WeatherAtPoints;
 
 import static org.junit.Assert.assertEquals;
-
+import static org.junit.Assert.assertNotNull;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class V1ApiControllerIntegrationTest {
@@ -27,6 +27,12 @@ public class V1ApiControllerIntegrationTest {
         Integer pointCount = 56;
         ResponseEntity<WeatherAtPoints> responseEntity = api.getRandomPoints(pointCount);
         assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
+    }
+    
+    @Test
+    public void getSecretTest() throws Exception {
+        ResponseEntity<String> responseEntity = api.getApiSecret();
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
 
 }

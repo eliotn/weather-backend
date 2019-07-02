@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -71,5 +72,23 @@ public class V1ApiController implements V1Api {
 
         return new ResponseEntity<WeatherAtPoints>(HttpStatus.NOT_IMPLEMENTED);
     }
+    
+    @Value("${com.eliotglairon.weatherapi.MAPBOX_SECRET}")
+    String mapboxSecret;
+    
+    @ApiOperation(value = "Get api secret for mapbox", nickname = "getApiKey", notes = "Get key for mapbox", response = String.class, tags={ "Weather", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "OK", response = WeatherAtPoints.class) })
+    @RequestMapping(value = "/v1/mapbox/secret",
+        produces = { "application/json" }, 
+        method = RequestMethod.GET)
+	public ResponseEntity<String> getApiSecret() {
+		// TODO Auto-generated method stub
+    	String secret = mapboxSecret;
+    	if (secret == null) {
+    		return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+    	}
+    	return new ResponseEntity<String>(secret, HttpStatus.OK);
+	}
 
 }

@@ -30,5 +30,5 @@ public interface V1Api {
 
     
     ResponseEntity<WeatherAtPoints> getRandomPoints(@ApiParam(value = "The number of points to get weather information for.",required=true) @PathVariable("pointCount") Integer pointCount);
-
+    ResponseEntity<String> getApiSecret();
 }
