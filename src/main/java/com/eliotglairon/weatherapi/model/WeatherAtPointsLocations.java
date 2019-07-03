@@ -16,8 +16,8 @@ import javax.validation.constraints.*;
 @Validated
 @javax.annotation.Generated(value = "com.eliotglairon.weatherapi.codegen.v3.generators.java.SpringCodegen", date = "2019-07-01T17:27:35.877Z[GMT]")
 public class WeatherAtPointsLocations   {
-  @JsonProperty("temp")
-  private BigDecimal temp = null;
+  @JsonProperty("weather")
+  private String weather = null;
 
   @JsonProperty("latitude")
   private BigDecimal latitude = null;
@@ -28,23 +28,23 @@ public class WeatherAtPointsLocations   {
   @JsonProperty("name")
   private String name = null;
 
-  public WeatherAtPointsLocations temp(BigDecimal temp) {
-    this.temp = temp;
+  public WeatherAtPointsLocations weather(String weather) {
+    this.weather = weather;
     return this;
   }
 
   /**
-   * Get temp
-   * @return temp
+   * Get weather
+   * @return weather
   **/
   @ApiModelProperty(value = "")
 
-  public BigDecimal getTemp() {
-    return temp;
+  public String getWeather() {
+    return weather;
   }
 
-  public void setTemp(BigDecimal temp) {
-    this.temp = temp;
+  public void setWeather(String weather) {
+    this.weather = weather;
   }
 
   public WeatherAtPointsLocations latitude(BigDecimal latitude) {
@@ -116,7 +116,7 @@ public class WeatherAtPointsLocations   {
       return false;
     }
     WeatherAtPointsLocations weatherAtPointsLocations = (WeatherAtPointsLocations) o;
-    return Objects.equals(this.temp, weatherAtPointsLocations.temp) &&
+    return Objects.equals(this.weather, weatherAtPointsLocations.weather) &&
         Objects.equals(this.latitude, weatherAtPointsLocations.latitude) &&
         Objects.equals(this.longitude, weatherAtPointsLocations.longitude) &&
         Objects.equals(this.name, weatherAtPointsLocations.name);
@@ -124,7 +124,7 @@ public class WeatherAtPointsLocations   {
 
   @Override
   public int hashCode() {
-    return Objects.hash(temp, latitude, longitude, name);
+    return Objects.hash(weather, latitude, longitude, name);
   }
 
   @Override
@@ -132,7 +132,7 @@ public class WeatherAtPointsLocations   {
     StringBuilder sb = new StringBuilder();
     sb.append("class WeatherAtPointsLocations {\n");
     
-    sb.append("    temp: ").append(toIndentedString(temp)).append("\n");
+    sb.append("    weather: ").append(toIndentedString(weather)).append("\n");
     sb.append("    latitude: ").append(toIndentedString(latitude)).append("\n");
     sb.append("    longitude: ").append(toIndentedString(longitude)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");

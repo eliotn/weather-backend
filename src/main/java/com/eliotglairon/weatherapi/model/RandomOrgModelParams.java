@@ -13,10 +13,10 @@ public class RandomOrgModelParams {
 		return this.n;
 	}
 	public Integer getMin() {
-		return 1;
+		return 0;
 	}
 	public Integer getMax() {
-		return 6;
+		return 359;
 	}
 	public Boolean getReplacement() {
 		return true;

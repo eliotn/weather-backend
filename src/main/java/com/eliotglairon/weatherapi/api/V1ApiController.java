@@ -53,6 +53,9 @@ public class V1ApiController implements V1Api {
     @Value("${MAPBOX_SECRET}")
     String mapboxSecret;
 
+	@Value("${OPENWEATHERAPI_SECRET}")
+    String openWeatherApiSecret;
+    
     @ApiOperation(value = "Get weather data at random locations", nickname = "getRandomPoints", notes = "Get weather and location information for pointCount randomized points ", response = WeatherAtPoints.class, tags={ "Weather", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "OK", response = WeatherAtPoints.class) })

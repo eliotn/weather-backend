@@ -1,5 +1,9 @@
 package com.eliotglairon.weatherapi;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+
+import java.util.Arrays;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +20,12 @@ public class ApiServiceTest {
 	private ApiService apiService;
 	
 	@Test(expected = ApiException.class)
-    public void failsOnInvalidRandomOrgSecret() throws Exception {
+    public void failsOnInvalidRandomOrgSecret() throws ApiException {
 		apiService.retrieveRandomOrgBits("Invalid", 1);
-		
+	}
+	
+	@Test(expected = ApiException.class)
+	public void failsOnInvalidOpenWeatherApiSecret() throws ApiException {
+		apiService.coordsToWeather("Invalid", new ArrayList<>(Arrays.asList(new BigDecimal(0), new BigDecimal(0))));
 	}
 }
