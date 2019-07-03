@@ -6,6 +6,9 @@ public class RandomOrgModelParams {
 	public String getApiKey() {
 		return this.apiKey;
 	}
+	public void setApiKey(String apiKey) {
+		this.apiKey = apiKey;
+	}
 	public Integer getN() {
 		return this.n;
 	}
