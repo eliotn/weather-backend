@@ -1,5 +1,6 @@
 package com.eliotglairon.weatherapi;
 
+import java.lang.reflect.Method;
 import java.util.*;
 
 import org.junit.Test;
@@ -9,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.context.request.async.DeferredResult;
 
 import com.eliotglairon.weatherapi.api.V1Api;
 import com.eliotglairon.weatherapi.model.WeatherAtPoints;
@@ -24,8 +26,11 @@ public class V1ApiControllerIntegrationTest {
 
     @Test
     public void getRandomPointsTest() throws Exception {
-        Integer pointCount = 56;
-        ResponseEntity<WeatherAtPoints> responseEntity = api.getRandomPoints(pointCount);
+        Integer pointCount = 7;
+        //use reflection to get the private method and make it testable
+        
+        ResponseEntity<WeatherAtPoints> responseEntity = 
+        		api.getRandomPointsThread("application/json", pointCount);
         assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
     }
     

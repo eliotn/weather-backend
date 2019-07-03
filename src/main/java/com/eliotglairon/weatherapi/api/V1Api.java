@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.context.request.async.DeferredResult;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.eliotglairon.weatherapi.model.WeatherAtPoints;
@@ -29,6 +30,7 @@ import java.util.Map;
 public interface V1Api {
 
     
-    ResponseEntity<WeatherAtPoints> getRandomPoints(@ApiParam(value = "The number of points to get weather information for.",required=true) @PathVariable("pointCount") Integer pointCount);
-    ResponseEntity<String> getApiSecret();
+	DeferredResult<ResponseEntity<WeatherAtPoints>> getRandomPoints(@ApiParam(value = "The number of points to get weather information for.",required=true) @PathVariable("pointCount") Integer pointCount);
+	ResponseEntity<WeatherAtPoints> getRandomPointsThread(String accept, Integer pointCount);
+	ResponseEntity<String> getApiSecret();
 }

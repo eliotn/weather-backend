@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.context.request.async.DeferredResult;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.*;
@@ -25,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ForkJoinPool;
 @javax.annotation.Generated(value = "com.eliotglairon.weatherapi.codegen.v3.generators.java.SpringCodegen", date = "2019-07-01T17:27:35.877Z[GMT]")
 @Controller
 public class V1ApiController implements V1Api {
@@ -57,9 +59,20 @@ public class V1ApiController implements V1Api {
     @RequestMapping(value = "/v1/weather/randomLocations/{pointCount}",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    public ResponseEntity<WeatherAtPoints> getRandomPoints(@ApiParam(value = "The number of points to get weather information for.",required=true) @PathVariable("pointCount") Integer pointCount) {
+    public DeferredResult<ResponseEntity<WeatherAtPoints>> getRandomPoints(@ApiParam(value = "The number of points to get weather information for.",required=true) @PathVariable("pointCount") Integer pointCount) {
         String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
+        DeferredResult<ResponseEntity<WeatherAtPoints>> output = new DeferredResult<>();
+        
+        ForkJoinPool.commonPool().submit(() -> {
+        	output.setResult(getRandomPointsThread(accept, pointCount));
+        });
+        
+        return output;
+        
+    }
+    
+    public ResponseEntity<WeatherAtPoints> getRandomPointsThread(String accept, Integer pointCount) {
+    	if (accept != null && accept.contains("application/json")) {
             try {
             	List<Integer> bits = apiRequest.retrieveRandomOrgBits(randomOrgSecret, 10);
                 return new ResponseEntity<WeatherAtPoints>(objectMapper.readValue("{" +
