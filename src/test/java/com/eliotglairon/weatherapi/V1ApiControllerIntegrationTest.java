@@ -31,7 +31,7 @@ public class V1ApiControllerIntegrationTest {
         
         ResponseEntity<WeatherAtPoints> responseEntity = 
         		api.getRandomPointsThread("application/json", pointCount);
-        assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
     
     

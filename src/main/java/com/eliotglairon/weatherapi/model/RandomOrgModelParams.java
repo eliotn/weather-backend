@@ -1,5 +1,7 @@
 package com.eliotglairon.weatherapi.model;
 
+import com.eliotglairon.weatherapi.api.V1Api;
+
 public class RandomOrgModelParams {
 	private String apiKey;
 	private Integer n;
@@ -16,7 +18,7 @@ public class RandomOrgModelParams {
 		return 0;
 	}
 	public Integer getMax() {
-		return 359;
+		return V1Api.MAX_RNG_RANGE-1;
 	}
 	public Boolean getReplacement() {
 		return true;

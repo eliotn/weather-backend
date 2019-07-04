@@ -30,6 +30,12 @@ public class WeatherAtPoints   {
     this.version = version;
     return this;
   }
+  
+  public WeatherAtPoints(String version, List<WeatherAtPointsLocations> locations) {
+	  super();
+	  this.version = "v1";
+	  this.locations = locations;
+  }
 
   /**
    * Get version

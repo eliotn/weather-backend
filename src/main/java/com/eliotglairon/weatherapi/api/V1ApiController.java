@@ -1,6 +1,7 @@
 package com.eliotglairon.weatherapi.api;
 
 import com.eliotglairon.weatherapi.model.WeatherAtPoints;
+import com.eliotglairon.weatherapi.model.WeatherAtPointsLocations;
 import com.eliotglairon.weatherapi.service.ApiService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
@@ -24,8 +25,13 @@ import javax.validation.constraints.*;
 import javax.validation.Valid;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ForkJoinPool;
 @javax.annotation.Generated(value = "com.eliotglairon.weatherapi.codegen.v3.generators.java.SpringCodegen", date = "2019-07-01T17:27:35.877Z[GMT]")
 @Controller
@@ -74,32 +80,39 @@ public class V1ApiController implements V1Api {
         
     }
     
+    private WeatherAtPointsLocations coordToWeather(Integer d0, Integer d1) throws ApiException {
+    	List<BigDecimal> latlng = apiRequest.randomIntToLatLng(d0, d1);
+    	return apiRequest.coordsToWeather(openWeatherApiSecret, latlng);
+    }
+    
     public ResponseEntity<WeatherAtPoints> getRandomPointsThread(String accept, Integer pointCount) {
     	if (accept != null && accept.contains("application/json")) {
+    		List<Integer> bits;
+    		
             try {
-            	List<Integer> bits = apiRequest.retrieveRandomOrgBits(randomOrgSecret, 10);
-                return new ResponseEntity<WeatherAtPoints>(objectMapper.readValue("{" +
-  "\"locations\" : [ {" +
-  "\"temp\" : " + bits.get(0) + "," +
-  "\"latitude\" : " + bits.get(1) + "," +
-  "\"name\" : \"name\"," +
-  "\"longitude\" : " + bits.get(2) +
-  "}, {" +
-    "\"temp\" : 32.10," +
-    "\"latitude\" : 0.8008281904610115," +
-    "\"name\" : \"name\"," +
-    "\"longitude\" : 6.027456183070403" +
-  "} ]," +
-  "\"version\" : \"v1\"" +
-"}", WeatherAtPoints.class), HttpStatus.NOT_IMPLEMENTED);
-            } catch (IOException e) {
-                log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<WeatherAtPoints>(HttpStatus.INTERNAL_SERVER_ERROR);
+            	bits = apiRequest.retrieveRandomOrgBits(randomOrgSecret, pointCount*2);
+            	
             }
             catch (ApiException e) {
             	log.error("random.org returned error, couldn't service request");
             	return new ResponseEntity<WeatherAtPoints>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
+            //does it need thread safety?
+            List<WeatherAtPointsLocations> weatherAtPoints = new CopyOnWriteArrayList<WeatherAtPointsLocations>();
+            for (int i = 0; i < pointCount; i++) {
+            	
+            	
+            	
+            	try {
+            		weatherAtPoints.add(coordToWeather(bits.get(i), bits.get(2*i+1)));
+            		
+            	} catch (ApiException e) {
+            		log.error("weather api returned error, couldn't service request");
+            		return new ResponseEntity<WeatherAtPoints>(HttpStatus.INTERNAL_SERVER_ERROR);
+            	}
+            }
+            WeatherAtPoints a = new WeatherAtPoints("v1", weatherAtPoints);
+            return new ResponseEntity<WeatherAtPoints>(a, HttpStatus.OK);
         }
 
         return new ResponseEntity<WeatherAtPoints>(HttpStatus.NOT_IMPLEMENTED);

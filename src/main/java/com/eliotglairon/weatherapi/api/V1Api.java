@@ -28,7 +28,7 @@ import java.util.Map;
 @javax.annotation.Generated(value = "com.eliotglairon.weatherapi.codegen.v3.generators.java.SpringCodegen", date = "2019-07-01T17:27:35.877Z[GMT]")
 @Api(value = "v1", description = "the v1 API")
 public interface V1Api {
-
+	public static final Integer MAX_RNG_RANGE = 100000000;
     
 	DeferredResult<ResponseEntity<WeatherAtPoints>> getRandomPoints(@ApiParam(value = "The number of points to get weather information for.",required=true) @PathVariable("pointCount") Integer pointCount);
 	ResponseEntity<WeatherAtPoints> getRandomPointsThread(String accept, Integer pointCount);
