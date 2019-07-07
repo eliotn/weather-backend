@@ -13,6 +13,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.context.request.async.DeferredResult;
 
 import com.eliotglairon.weatherapi.api.V1Api;
+import com.eliotglairon.weatherapi.model.ApiKeyShare;
 import com.eliotglairon.weatherapi.model.WeatherAtPoints;
 
 import static org.junit.Assert.assertEquals;
@@ -38,7 +39,7 @@ public class V1ApiControllerIntegrationTest {
     
     @Test
     public void getSecretTest() throws Exception {
-        ResponseEntity<String> responseEntity = api.getApiSecret();
+        ResponseEntity<ApiKeyShare> responseEntity = api.getApiSecret();
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
 

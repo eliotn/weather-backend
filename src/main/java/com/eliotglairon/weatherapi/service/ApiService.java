@@ -100,6 +100,7 @@ public class ApiService {
 		try {
 			String url = "https://api.openweathermap.org/data/2.5/weather?lat="
 					+ lat + "&lon=" + lon +"&APPID=";
+			//sanitize console output
 			System.out.println(url + "<removed for security purposes>");
 			JsonNode response = restTemplate.getForObject(url + openWeatherApiSecret, JsonNode.class);
 			System.out.println(response.toString());

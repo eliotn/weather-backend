@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.context.request.async.DeferredResult;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.eliotglairon.weatherapi.model.ApiKeyShare;
 import com.eliotglairon.weatherapi.model.WeatherAtPoints;
 
 import javax.validation.Valid;
@@ -32,5 +33,5 @@ public interface V1Api {
     
 	DeferredResult<ResponseEntity<WeatherAtPoints>> getRandomPoints(@ApiParam(value = "The number of points to get weather information for.",required=true) @PathVariable("pointCount") Integer pointCount);
 	ResponseEntity<WeatherAtPoints> getRandomPointsThread(String accept, Integer pointCount);
-	ResponseEntity<String> getApiSecret();
+	ResponseEntity<ApiKeyShare> getApiSecret();
 }

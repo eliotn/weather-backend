@@ -1,5 +1,6 @@
 package com.eliotglairon.weatherapi.api;
 
+import com.eliotglairon.weatherapi.model.ApiKeyShare;
 import com.eliotglairon.weatherapi.model.WeatherAtPoints;
 import com.eliotglairon.weatherapi.model.WeatherAtPointsLocations;
 import com.eliotglairon.weatherapi.service.ApiService;
@@ -100,13 +101,13 @@ public class V1ApiController implements V1Api {
             	return new ResponseEntity<WeatherAtPoints>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
             //does it need thread safety?
-            List<WeatherAtPointsLocations> weatherAtPoints = new CopyOnWriteArrayList<WeatherAtPointsLocations>();
+            List<WeatherAtPointsLocations> weatherAtPoints = new CopyOnWriteArrayList<WeatherAtPointsLocations>(new WeatherAtPointsLocations[10]);
             for (int i = 0; i < pointCount; i++) {
             	
             	
             	
             	try {
-            		weatherAtPoints.add(coordToWeather(bits.get(i), bits.get(2*i+1)));
+            		weatherAtPoints.set(i, coordToWeather(bits.get(2*i), bits.get(2*i+1)));
             		
             	} catch (ApiException e) {
             		log.error("weather api returned error, couldn't service request");
@@ -126,13 +127,13 @@ public class V1ApiController implements V1Api {
     @RequestMapping(value = "/v1/mapbox/secret",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-	public ResponseEntity<String> getApiSecret() {
+	public ResponseEntity<ApiKeyShare> getApiSecret() {
 		// TODO Auto-generated method stub
     	String secret = mapboxSecret;
     	if (secret == null) {
-    		return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+    		return new ResponseEntity<ApiKeyShare>(HttpStatus.NOT_FOUND);
     	}
-    	return new ResponseEntity<String>(secret, HttpStatus.OK);
+    	return new ResponseEntity<ApiKeyShare>(new ApiKeyShare(secret), HttpStatus.OK);
 	}
 
 }
