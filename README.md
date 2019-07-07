@@ -1,4 +1,15 @@
-# Swagger generated server
+#Eliot Glairon's backend weather service
+
+## To run
+
+Program requirements: Maven, Java 8
+
+1. Sign up for a mapbox account at mapbox.com.  Then login and navigate to account.mapbox.com.  You should see a Default public token under access tokens.  Copy the token.  Edit src/main/resources/application.properties under the root directory and replace the ${MAPBOX_SECRET} value with this token.
+2. Sign up for an account at random.org.  Then login and navigate to https://api.random.org/dashboard.  Click create a new api key, and follow the instructions on the prompt.  Click on the created key and copy the value under API key for the token.  Edit src/main/resources/application.properties under the root directory and replace the ${RANDOMORG_SECRET} value with this token.
+3. Sign up for an openweathermap.org account.  Then login and navigate to https://home.openweathermap.org/api_keys.  Here, you can use the default key or generate one specifically for this application.  Whichever option you choose, copy the token.  Edit src/main/resources/application.properties under the root directory and replace the ${OPENWEATHERAPI_SECRET} value with this token.
+4. The server should start in port 8080 by default.  If you want to start it in a different port, you can modify the server.port value in the src/main/resources/application.properties file
+4. In the project root directory with maven installed, run `mvn clean && mvn install`.  If the application is configured correctly, all 4 tests should pass.
+5. In the project root directory, run the server with the command java -jar target/eliot-glairon-weather-backend-1.0.0.jar.  
 
 Spring Boot Server 
 

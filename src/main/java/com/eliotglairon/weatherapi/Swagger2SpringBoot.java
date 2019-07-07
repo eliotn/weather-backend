@@ -11,7 +11,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
 @EnableSwagger2
-@EnableDiscoveryClient
+//@EnableDiscoveryClient
 @ComponentScan(basePackages = { "com.eliotglairon.weatherapi", "com.eliotglairon.weatherapi.api" , "com.eliotglairon.weatherapi.configuration"})
 public class Swagger2SpringBoot implements CommandLineRunner {
 
