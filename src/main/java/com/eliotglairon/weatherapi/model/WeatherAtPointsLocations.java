@@ -18,6 +18,9 @@ import javax.validation.constraints.*;
 public class WeatherAtPointsLocations   {
   @JsonProperty("weather")
   private String weather = null;
+  
+  @JsonProperty("weatherIcon")
+  private String weatherIcon = null;
 
   @JsonProperty("latitude")
   private BigDecimal latitude = null;
@@ -104,6 +107,16 @@ public class WeatherAtPointsLocations   {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  @ApiModelProperty(value = "")
+
+  public String getWeatherIcon() {
+    return weatherIcon;
+  }
+
+  public void setWeatherIcon(String weatherIcon) {
+    this.weatherIcon = weatherIcon;
   }
 
 

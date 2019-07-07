@@ -106,6 +106,8 @@ public class ApiService {
 			System.out.println(response.toString());
 			loc.setName(response.get("name").asText());
 			loc.setWeather(response.get("weather").get(0).get("description").asText());
+			//set weather icon from openweathermap
+			loc.setWeatherIcon("http://openweathermap.org/img/wn/" + response.get("weather").get(0).get("icon").asText() + "@2x.png");
 		} catch (HttpClientErrorException ex) { throw new ApiException(200, "OpenWeatherApi returned an Error"); }
 		return loc;
 	}
