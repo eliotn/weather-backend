@@ -1,5 +1,9 @@
 #Eliot Glairon's backend weather service
 
+## Functionality
+
+This server provides storage for the mapbox frontend api.  It also has a generate points api call that utilizes random.org and the open weather api to return latitude, longitude, and an icon weather for each location for the frontend api to consume.
+
 ## To run
 
 Program requirements: Maven, Java 8
@@ -10,8 +14,6 @@ Program requirements: Maven, Java 8
 4. The server should start in port 8080 by default.  If you want to start it in a different port, you can modify the server.port value in the src/main/resources/application.properties file
 4. In the project root directory with maven installed, run `mvn clean && mvn install`.  If the application is configured correctly, all 4 tests should pass.
 5. In the project root directory, run the server with the command java -jar target/eliot-glairon-weather-backend-1.0.0.jar.  
-
-Spring Boot Server 
 
 
 ## Overview  
