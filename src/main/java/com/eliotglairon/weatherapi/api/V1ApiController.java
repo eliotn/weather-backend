@@ -89,6 +89,9 @@ public class V1ApiController implements V1Api {
     }
     
     public ResponseEntity<WeatherAtPoints> getRandomPointsThread(String accept, Integer pointCount) {
+    	if (pointCount <= 0) {
+    		return new ResponseEntity<WeatherAtPoints>(HttpStatus.BAD_REQUEST);
+    	}
     	if (accept != null && accept.contains("application/json")) {
     		List<Integer> bits;
     		

@@ -28,13 +28,22 @@ public class V1ApiControllerIntegrationTest {
     @Test
     public void getRandomPointsTest() throws Exception {
         Integer pointCount = 7;
-        //use reflection to get the private method and make it testable
         
         ResponseEntity<WeatherAtPoints> responseEntity = 
         		api.getRandomPointsThread("application/json", pointCount);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
     
+    
+    @Test
+    public void getRandomPointsTestBoundary() throws Exception {
+    	ResponseEntity<WeatherAtPoints> responseEntity = 
+        		api.getRandomPointsThread("application/json", 0);
+        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+        responseEntity = 
+        		api.getRandomPointsThread("application/json", -6);
+        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+    }
     
     
     @Test
